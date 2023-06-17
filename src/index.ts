@@ -1,8 +1,10 @@
 // import multiplication from "./operators/multiplication";
-import summation from "./operators/summation";
+import addition from "./operators/addition";
+import subtraction from "./operators/subtraction";
 
-const num1 = "9287395723094857029384750923874509283740598237";
-const num2 = "9287395723094857029384750923874509283740598237";
-
+const num1 = "0.03";
+const num2 = "0";
 // console.log(multiplication([num1, num2]))
-console.log(summation([num1, num2]))
+
+// console.log(addition(num1, num2))
+console.log(subtraction(num1, num2));

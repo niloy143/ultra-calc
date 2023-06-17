@@ -1,16 +1,8 @@
-function multiplication(numbers: number[]): number {
-    return numbers.reduce((prev, cur) => {
-        const small = prev > cur ? cur : prev;
-        const large = prev < cur ? cur : prev;
+import digitEqualizer from "./digit-equalizer";
 
-        // const digits = `${small}`.length;
-        // const multiplications = new Array(digits).fill([]).map((_, digitIndex) => {
-        //     return `${large}`.split("").map(x => Number(x) * Number(`${small}`[digitIndex]))
-        // })
-        // console.log(small, large, multiplications)
-
-        return small * large;
-    }, 1);
+function multiplication(num1: string, num2: string): string {
+    const [n1, n2] = digitEqualizer([num1, num2]);
+    return `${Number(n1) * Number(n2)}`;
 }
 
 export default multiplication;
