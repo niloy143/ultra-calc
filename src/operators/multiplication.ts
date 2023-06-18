@@ -1,10 +1,9 @@
 import addition from "./addition";
 import compareNumber from "./compare-number";
-import digitEqualizer from "./digit-equalizer";
 
 function multiplication(num1: string, num2: string): string {
     const [bigNum, smallNum] = compareNumber(num1, num2);
-    const digitMultiplications: string[] = Array(smallNum.length).fill("");
+    let sumOfMul = "";
     for (let i = smallNum.length - 1; i >= 0; i--) {
         const digit1 = Number(smallNum[i]);
         if (!digit1) continue;
@@ -16,13 +15,10 @@ function multiplication(num1: string, num2: string): string {
             carry = Math.floor(mul / 10);
             mulResult = mul % 10 + mulResult;
         }
-        digitMultiplications[digitMultiplications.length - 1 - i] = `${carry || ""}${mulResult}`;
+        const currMul = `${carry || ""}${mulResult}` + Array(smallNum.length - 1 - i).fill("0").join("");
+        sumOfMul = addition(sumOfMul, currMul);
     }
-    const result = digitMultiplications.reduce((prev, curr, i) => {
-        const currNum = curr + Array(i).fill("0").join("");
-        return addition(prev, currNum);
-    }, "")
-    return result;
+    return sumOfMul || "0";
 }
 
 export default multiplication;

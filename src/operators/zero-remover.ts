@@ -1,4 +1,4 @@
-export function popZero(num: string) {
+export function popZeroes(num: string) {
     let zeros = 0;
     while (true) {
         if (num[num.length - 1 - zeros] == "0")
@@ -7,7 +7,7 @@ export function popZero(num: string) {
     }
     return num.slice(0, num.length - zeros);
 };
-export function shiftZero(num: string) {
+export function shiftZeroes(num: string) {
     let zeros = 0;
     while (true) {
         if (num[zeros] == "0")

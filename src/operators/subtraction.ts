@@ -1,5 +1,5 @@
 import digitEqualizer from "./digit-equalizer";
-import { popZero, shiftZero } from "./zero-remover";
+import { popZeroes, shiftZeroes } from "./zero-remover";
 
 function subtraction(num1: string, num2: string): string {
     const [int1, dec1] = num1.split(".");
@@ -17,8 +17,8 @@ function subtraction(num1: string, num2: string): string {
         }
     }
 
-    const ints = shiftZero(subtract(n1, n2, decCarry));
-    const decs = popZero(decDiff);
+    const ints = shiftZeroes(subtract(n1, n2, decCarry));
+    const decs = popZeroes(decDiff);
 
     return `${ints || 0}${decs ? "." + decs : ""}`;
 }
