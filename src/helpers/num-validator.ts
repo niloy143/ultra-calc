@@ -1,6 +1,6 @@
 export default function numValidator(num: string): string {
 
-    const pattern = /^\d+\.?\d+$/;
+    const pattern = /^\d*\.?\d+$/;
     if (!pattern.test(num)) {
         let number = num.length <= 20 ? num : `${num.slice(0, 20)}...`;
 

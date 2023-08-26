@@ -1,7 +1,8 @@
-import { add, subtract, multiply } from "./operators";
+import { add, subtract, multiply, divide } from "./operators";
 
 export {
     add,
     subtract,
-    multiply
+    multiply,
+    divide
 };
