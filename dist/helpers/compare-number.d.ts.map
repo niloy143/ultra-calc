@@ -1,0 +1,1 @@
+{"version":3,"file":"compare-number.d.ts","sourceRoot":"","sources":["../../src/helpers/compare-number.ts"],"names":[],"mappings":"AAIA,KAAK,cAAc,GAAG;IAAE,GAAG,EAAE,MAAM,CAAC;IAAC,KAAK,EAAE,MAAM,CAAC;IAAC,MAAM,EAAE,CAAC,GAAG,CAAC,GAAG,CAAC,CAAC,CAAA;CAAE,CAAA;AAExE,iBAAS,aAAa,CAAC,IAAI,EAAE,MAAM,EAAE,IAAI,EAAE,MAAM,GAAG,cAAc,CAcjE;AAED,eAAe,aAAa,CAAC"}
