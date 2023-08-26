@@ -4,24 +4,26 @@ import subtraction from "./subtraction";
 import { shiftZeroes } from "./zero-remover";
 
 export default function division(dividend: string, divisor: string, fractionLimit?: number): string {
-    const quotient = divide(dividend, divisor, fractionLimit);
-    // const dividendDecIndex = dividend.indexOf(".");
-    // const divisorDecIndex = divisor.indexOf(".");
+    const dividendDecIndex = dividend.indexOf(".");
+    const divisorDecIndex = divisor.indexOf(".");
 
-    // const dividendDecs = dividendDecIndex === -1 ? 0 : dividend.length - dividendDecIndex - 1;
-    // const divisorDecs = divisorDecIndex === -1 ? 0 : divisor.length - divisorDecIndex - 1;
-    // const totalDecs = dividendDecs - divisorDecs;
+    const dividendDecs = dividendDecIndex === -1 ? 0 : dividend.length - dividendDecIndex - 1;
+    const divisorDecs = divisorDecIndex === -1 ? 0 : divisor.length - divisorDecIndex - 1;
+    const totalDecs = dividendDecs - divisorDecs;
 
-    // let quotient = divide(dividend.split(".").join(""), divisor.split(".").join(""));
+    let quotient = divide(dividend.split(".").join(""), divisor.split(".").join(""), fractionLimit);
+    let currDecIndex = quotient.indexOf(".");
+    currDecIndex = currDecIndex === -1 ? quotient.length : currDecIndex;
+    const targetDecIndex = currDecIndex - totalDecs;
 
-    // if( totalDecs < 0) {
-    //     // add more zeros to the end;
-    // } else if (quotient.length > totalDecs) {
-    //     const decIndex = quotient.length - totalDecs;
-    //     quotient = quotient.slice(0, decIndex) + "." + quotient.slice(decIndex, quotient.length);
-    // } else {
-    //     quotient = "0." + Array(totalDecs - quotient.length).fill("0").join("") + quotient;
-    // }
+    quotient = quotient.split(".").join("");
+    if (targetDecIndex > 0 && targetDecIndex < quotient.length) {
+        quotient = quotient.slice(0, targetDecIndex) + "." + quotient.slice(targetDecIndex, quotient.length);
+    } else if (targetDecIndex <= 0) {
+        quotient = "0." + Array(Math.abs(targetDecIndex)).fill("0").join("") + quotient;
+    } else {
+        quotient += Array(targetDecIndex - quotient.length).fill("0").join("");
+    }
 
     return numSanitizer(quotient);
 }
