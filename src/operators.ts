@@ -13,8 +13,8 @@ function subtract(num1: string, num2: string): string {
 function multiply(num1: string, num2: string): string {
     return multiplication(numValidator(`${num1}`), numValidator(`${num2}`))
 }
-function divide(dividend: string, divisor: string): string {
-    return division(numValidator(`${dividend}`), numValidator(`${divisor}`))
+function divide(dividend: string, divisor: string, fractionLimit?: number): string {
+    return division(numValidator(`${dividend}`), numValidator(`${divisor}`), fractionLimit)
 }
 
 export {

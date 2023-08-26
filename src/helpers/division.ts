@@ -1,3 +1,4 @@
+import compareNumber from "./compare-number";
 import multiplication from "./multiplication";
 import numSanitizer from "./num-sanitizer";
 import subtraction from "./subtraction";
@@ -28,7 +29,7 @@ export default function division(dividend: string, divisor: string, fractionLimi
     return numSanitizer(quotient);
 }
 
-function divide(dividend: string, divisor: string, fractionLimit = 1000): string {
+function divide(dividend: string, divisor: string, fractionLimit = 10): string {
     let quotient = "";
     let remainder = "";
 
@@ -45,8 +46,9 @@ function divide(dividend: string, divisor: string, fractionLimit = 1000): string
 
         let j = 9;
         while (j >= 0) {
-            let mul = multiplication(divisor, `${j}`);
-            if (!greaterThan(mul, remainder)) {
+            if (compareNumber(remainder, divisor).result === -1) j = 0;
+            const mul = multiplication(divisor, `${j}`);
+            if (compareNumber(mul, remainder).result !== 1) {
                 quotient += j;
                 remainder = subtraction(remainder, mul);
                 break;
@@ -57,8 +59,4 @@ function divide(dividend: string, divisor: string, fractionLimit = 1000): string
     } while ((shiftZeroes(remainder) || i < dividend.length) && (i - dividend.length) < fractionLimit)
 
     return quotient;
-}
-
-function greaterThan(big: string, small: string) {
-    return Number(big) > Number(small);
 }

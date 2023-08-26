@@ -23,20 +23,20 @@ function multiplication(num1: string, num2: string): string {
 }
 
 function multiply(num1: string, num2: string) {
-    const [bigNum, smallNum] = compareNumber(num1, num2);
+    const { big: multiplicand, small: multiplier } = compareNumber(num1, num2);
     let sumOfMul = "";
-    for (let i = smallNum.length - 1; i >= 0; i--) {
-        const digit1 = Number(smallNum[i]);
+    for (let i = multiplier.length - 1; i >= 0; i--) {
+        const digit1 = Number(multiplier[i]);
         if (!digit1) continue;
         let mulResult = "";
         let carry = 0;
-        for (let j = bigNum.length - 1; j >= 0; j--) {
-            const digit2 = Number(bigNum[j]);
+        for (let j = multiplicand.length - 1; j >= 0; j--) {
+            const digit2 = Number(multiplicand[j]);
             const mul = (digit1 * digit2) + carry;
             carry = Math.floor(mul / 10);
             mulResult = mul % 10 + mulResult;
         }
-        const currMul = `${carry || ""}${mulResult}` + Array(smallNum.length - 1 - i).fill("0").join("");
+        const currMul = `${carry || ""}${mulResult}` + Array(multiplier.length - 1 - i).fill("0").join("");
         sumOfMul = addition(sumOfMul, currMul);
     }
     return sumOfMul || "0";
