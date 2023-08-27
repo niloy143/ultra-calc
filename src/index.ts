@@ -1,4 +1,4 @@
-import { add, subtract, multiply, divide } from "./operators";
+import { add, subtract, multiply, divide } from "./calculate/operators";
 
 export {
     add,

@@ -1,8 +1,8 @@
-import multiplication from "./helpers/multiplication";
-import addition from "./helpers/addition";
-import subtraction from "./helpers/subtraction";
-import numValidator from "./helpers/num-validator";
-import division from "./helpers/division";
+import multiplication from "../helpers/multiplication";
+import addition from "../helpers/addition";
+import subtraction from "../helpers/subtraction";
+import numValidator from "../helpers/num-validator";
+import division from "../helpers/division";
 
 function add(num1: string, num2: string): string {
     return addition(numValidator(`${num1}`), numValidator(`${num2}`))
