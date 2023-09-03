@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const operators_1 = require("../utils/operators");
 const compare_number_1 = __importDefault(require("./compare-number"));
 const multiplication_1 = __importDefault(require("./multiplication"));
 const num_sanitizer_1 = __importDefault(require("./num-sanitizer"));
@@ -14,7 +15,9 @@ function division(dividend, divisor, fractionLimit) {
     const dividendDecs = dividendDecIndex === -1 ? 0 : dividend.length - dividendDecIndex - 1;
     const divisorDecs = divisorDecIndex === -1 ? 0 : divisor.length - divisorDecIndex - 1;
     const totalDecs = dividendDecs - divisorDecs;
-    let quotient = divide(dividend.split(".").join(""), divisor.split(".").join(""), fractionLimit);
+    dividend = (0, num_sanitizer_1.default)(dividend.split(".").join(""));
+    divisor = divisor.split(".").join("");
+    let quotient = divide(dividend, divisor, fractionLimit);
     let currDecIndex = quotient.indexOf(".");
     currDecIndex = currDecIndex === -1 ? quotient.length : currDecIndex;
     const targetDecIndex = currDecIndex - totalDecs;
@@ -31,7 +34,9 @@ function division(dividend, divisor, fractionLimit) {
     return (0, num_sanitizer_1.default)(quotient);
 }
 exports.default = division;
-function divide(dividend, divisor, fractionLimit = 10) {
+function divide(dividend, divisor, fractionLimit = 1000) {
+    if (divisor === operators_1.ZERO)
+        throw new Error("Cannot divide by zero");
     let quotient = "";
     let remainder = "";
     let i = 0;
@@ -45,18 +50,17 @@ function divide(dividend, divisor, fractionLimit = 10) {
             }
             remainder += "0";
         }
-        let j = 9;
-        while (j >= 0) {
-            if ((0, compare_number_1.default)(remainder, divisor).result === -1)
-                j = 0;
-            const mul = (0, multiplication_1.default)(divisor, `${j}`);
-            if ((0, compare_number_1.default)(mul, remainder).result !== 1) {
-                quotient += j;
-                remainder = (0, subtraction_1.default)(remainder, mul);
+        let j = 0;
+        let currProd = "";
+        while (j <= 9) {
+            const product = (0, multiplication_1.default)(divisor, `${j}`);
+            if ((0, compare_number_1.default)(product, remainder).result === 1)
                 break;
-            }
-            j--;
+            currProd = product;
+            j++;
         }
+        quotient += (j - 1);
+        remainder = (0, subtraction_1.default)(remainder, currProd);
         i++;
     } while (((0, zero_remover_1.shiftZeroes)(remainder) || i < dividend.length) && (i - dividend.length) < fractionLimit);
     return quotient;
