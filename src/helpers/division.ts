@@ -1,3 +1,4 @@
+import { ZERO } from "../utils/operators";
 import compareNumber from "./compare-number";
 import multiplication from "./multiplication";
 import numSanitizer from "./num-sanitizer";
@@ -12,7 +13,9 @@ export default function division(dividend: string, divisor: string, fractionLimi
     const divisorDecs = divisorDecIndex === -1 ? 0 : divisor.length - divisorDecIndex - 1;
     const totalDecs = dividendDecs - divisorDecs;
 
-    let quotient = divide(dividend.split(".").join(""), divisor.split(".").join(""), fractionLimit);
+    dividend = numSanitizer(dividend.split(".").join(""));
+    divisor = divisor.split(".").join("");
+    let quotient = divide(dividend, divisor, fractionLimit);
     let currDecIndex = quotient.indexOf(".");
     currDecIndex = currDecIndex === -1 ? quotient.length : currDecIndex;
     const targetDecIndex = currDecIndex - totalDecs;
@@ -29,7 +32,10 @@ export default function division(dividend: string, divisor: string, fractionLimi
     return numSanitizer(quotient);
 }
 
-function divide(dividend: string, divisor: string, fractionLimit = 10): string {
+function divide(dividend: string, divisor: string, fractionLimit = 1000): string {
+    if (divisor === ZERO)
+        throw new Error("Cannot divide by zero")
+
     let quotient = "";
     let remainder = "";
 
@@ -44,17 +50,17 @@ function divide(dividend: string, divisor: string, fractionLimit = 10): string {
             remainder += "0";
         }
 
-        let j = 9;
-        while (j >= 0) {
-            if (compareNumber(remainder, divisor).result === -1) j = 0;
-            const mul = multiplication(divisor, `${j}`);
-            if (compareNumber(mul, remainder).result !== 1) {
-                quotient += j;
-                remainder = subtraction(remainder, mul);
-                break;
-            }
-            j--
+        let j = 0;
+        let currProd = "";
+        while (j <= 9) {
+            const product = multiplication(divisor, `${j}`);
+            if (compareNumber(product, remainder).result === 1) break;
+            currProd = product;
+            j++;
         }
+        quotient += (j - 1);
+        remainder = subtraction(remainder, currProd);
+
         i++;
     } while ((shiftZeroes(remainder) || i < dividend.length) && (i - dividend.length) < fractionLimit)
 

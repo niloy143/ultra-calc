@@ -38,26 +38,6 @@ function calculateRecursively(input) {
     }
     const blocks = separateBlocks(input);
     while (blocks.length > 1) {
-        const into = blocks.indexOf(operators_1.INTO);
-        if (into !== -1) {
-            let num1 = blocks[into - 1];
-            let num2 = blocks[into + 1];
-            let num1PosNeg = operators_1.PLUS;
-            let num2PosNeg = operators_1.PLUS;
-            if (num1[0] === operators_1.MINUS) {
-                num1PosNeg = operators_1.MINUS;
-                num1 = num1.slice(1, num1.length);
-            }
-            if (num2[0] === operators_1.MINUS) {
-                num2PosNeg = operators_1.MINUS;
-                num2 = num2.slice(1, num2.length);
-            }
-            const isNegAns = operators_1.posNegTable[num1PosNeg][num2PosNeg] === operators_1.MINUS;
-            const product = (0, operators_2.multiply)(num1, num2);
-            const ans = `${isNegAns ? operators_1.MINUS : ""}${product}`;
-            blocks.splice(into - 1, 3, ans);
-            continue;
-        }
         const division = blocks.indexOf(operators_1.DIVISION);
         if (division !== -1) {
             let dividend = blocks[division - 1];
@@ -76,6 +56,26 @@ function calculateRecursively(input) {
             const quotient = (0, operators_2.divide)(dividend, divisor);
             const ans = `${isNegAns ? operators_1.MINUS : ""}${quotient}`;
             blocks.splice(division - 1, 3, ans);
+            continue;
+        }
+        const into = blocks.indexOf(operators_1.INTO);
+        if (into !== -1) {
+            let num1 = blocks[into - 1];
+            let num2 = blocks[into + 1];
+            let num1PosNeg = operators_1.PLUS;
+            let num2PosNeg = operators_1.PLUS;
+            if (num1[0] === operators_1.MINUS) {
+                num1PosNeg = operators_1.MINUS;
+                num1 = num1.slice(1, num1.length);
+            }
+            if (num2[0] === operators_1.MINUS) {
+                num2PosNeg = operators_1.MINUS;
+                num2 = num2.slice(1, num2.length);
+            }
+            const isNegAns = operators_1.posNegTable[num1PosNeg][num2PosNeg] === operators_1.MINUS;
+            const product = (0, operators_2.multiply)(num1, num2);
+            const ans = `${isNegAns ? operators_1.MINUS : ""}${product}`;
+            blocks.splice(into - 1, 3, ans);
             continue;
         }
         const minus = blocks.indexOf(operators_1.MINUS);

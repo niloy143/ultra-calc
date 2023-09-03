@@ -39,34 +39,6 @@ function calculateRecursively(input: string): string {
     const blocks = separateBlocks(input);
 
     while (blocks.length > 1) {
-
-        const into = blocks.indexOf(INTO);
-        if (into !== -1) {
-            let num1 = blocks[into - 1];
-            let num2 = blocks[into + 1];
-            let num1PosNeg = PLUS;
-            let num2PosNeg = PLUS;
-
-            if (num1[0] === MINUS) {
-                num1PosNeg = MINUS;
-                num1 = num1.slice(1, num1.length);
-            }
-
-            if (num2[0] === MINUS) {
-                num2PosNeg = MINUS;
-                num2 = num2.slice(1, num2.length);
-            }
-
-            const isNegAns = posNegTable[num1PosNeg][num2PosNeg] === MINUS;
-
-            const product = multiply(num1, num2);
-
-            const ans = `${isNegAns ? MINUS : ""}${product}`;
-
-            blocks.splice(into - 1, 3, ans);
-
-            continue;
-        }
         const division = blocks.indexOf(DIVISION);
         if (division !== -1) {
             let dividend = blocks[division - 1];
@@ -92,6 +64,34 @@ function calculateRecursively(input: string): string {
             const ans = `${isNegAns ? MINUS : ""}${quotient}`;
 
             blocks.splice(division - 1, 3, ans);
+
+            continue;
+        }
+
+        const into = blocks.indexOf(INTO);
+        if (into !== -1) {
+            let num1 = blocks[into - 1];
+            let num2 = blocks[into + 1];
+            let num1PosNeg = PLUS;
+            let num2PosNeg = PLUS;
+
+            if (num1[0] === MINUS) {
+                num1PosNeg = MINUS;
+                num1 = num1.slice(1, num1.length);
+            }
+
+            if (num2[0] === MINUS) {
+                num2PosNeg = MINUS;
+                num2 = num2.slice(1, num2.length);
+            }
+
+            const isNegAns = posNegTable[num1PosNeg][num2PosNeg] === MINUS;
+
+            const product = multiply(num1, num2);
+
+            const ans = `${isNegAns ? MINUS : ""}${product}`;
+
+            blocks.splice(into - 1, 3, ans);
 
             continue;
         }
