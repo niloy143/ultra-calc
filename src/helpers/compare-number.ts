@@ -1,4 +1,5 @@
 import { DOT } from "../utils/operators";
+import numSanitizer from "./num-sanitizer";
 
 type ComparedResult = { big: string, small: string, result: 1 | 0 | -1 }
 
@@ -13,8 +14,8 @@ function getResult(x: string, y: string) {
 function compareNumber(n1: string, n2: string): ComparedResult {
     const result = getResult(n1, n2);
 
-    const [num1, dec1] = n1.split(DOT);
-    const [num2, dec2] = n2.split(DOT);
+    const [num1, dec1] = numSanitizer(n1).split(DOT);
+    const [num2, dec2] = numSanitizer(n2).split(DOT);
 
     if (num1.length > num2.length) return result.greater;
     if (num1.length < num2.length) return result.smaller;

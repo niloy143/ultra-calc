@@ -49,3 +49,7 @@ console.log(calculate("0.1 - 0.3"));
 
 - Addition and Subtraction have O(N) complexity so it can handle million digits in a second normally.
 - Multiplication and Division have O(N\*N) complexity normally, but it depends on the multiplier, divisor, remainder, fraction quotient etc. Normally it can handle thousands of digits in a second.
+
+## Good to know
+- By default, the fraction limit of division is 1000 (to avoid infinite fractions), so if any division requires more than 1000 decimal values to get the correct result, it might not work properly.
+- It follows Operators priority as this: Division => Multiplication => Subtraction => Addition.`
