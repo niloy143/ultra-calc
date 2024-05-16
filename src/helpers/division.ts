@@ -5,7 +5,9 @@ import numSanitizer from "./num-sanitizer";
 import subtraction from "./subtraction";
 import { shiftZeroes } from "./zero-remover";
 
-export default function division(dividend: string, divisor: string, fractionLimit?: number): string {
+export const FRACTION_LIMIT = 1000;
+
+export default function division(dividend: string, divisor: string): string {
     const dividendDecIndex = dividend.indexOf(".");
     const divisorDecIndex = divisor.indexOf(".");
 
@@ -15,7 +17,7 @@ export default function division(dividend: string, divisor: string, fractionLimi
 
     dividend = numSanitizer(dividend.split(".").join(""));
     divisor = divisor.split(".").join("");
-    let quotient = divide(dividend, divisor, fractionLimit);
+    let quotient = divide(dividend, divisor);
     let currDecIndex = quotient.indexOf(".");
     currDecIndex = currDecIndex === -1 ? quotient.length : currDecIndex;
     const targetDecIndex = currDecIndex - totalDecs;
@@ -32,7 +34,9 @@ export default function division(dividend: string, divisor: string, fractionLimi
     return numSanitizer(quotient);
 }
 
-function divide(dividend: string, divisor: string, fractionLimit = 1000): string {
+function divide(dividend: string, divisor: string): string {
+    const fractionLimit = FRACTION_LIMIT+1; // the last decimal digit is used to round the number
+
     if (divisor === ZERO)
         throw new Error("Cannot divide by zero")
 

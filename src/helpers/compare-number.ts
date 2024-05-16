@@ -1,4 +1,5 @@
 import { DOT } from "../utils/operators";
+import digitEqualizer from "./digit-equalizer";
 import numSanitizer from "./num-sanitizer";
 
 type ComparedResult = { big: string, small: string, result: 1 | 0 | -1 }
@@ -14,8 +15,11 @@ function getResult(x: string, y: string) {
 function compareNumber(n1: string, n2: string): ComparedResult {
     const result = getResult(n1, n2);
 
-    const [num1, dec1] = numSanitizer(n1).split(DOT);
-    const [num2, dec2] = numSanitizer(n2).split(DOT);
+    let [num1, dec1] = numSanitizer(n1).split(DOT);
+    let [num2, dec2] = numSanitizer(n2).split(DOT);
+
+    [num1, num2] = digitEqualizer([num1 || "", num2 || ""]);
+    [dec1, dec2] = digitEqualizer([dec1 || "", dec2 || ""], true)
 
     if (num1.length > num2.length) return result.greater;
     if (num1.length < num2.length) return result.smaller;
