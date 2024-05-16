@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const operators_1 = require("../utils/operators");
+const digit_equalizer_1 = __importDefault(require("./digit-equalizer"));
 const num_sanitizer_1 = __importDefault(require("./num-sanitizer"));
 function getResult(x, y) {
     return {
@@ -14,8 +15,10 @@ function getResult(x, y) {
 }
 function compareNumber(n1, n2) {
     const result = getResult(n1, n2);
-    const [num1, dec1] = (0, num_sanitizer_1.default)(n1).split(operators_1.DOT);
-    const [num2, dec2] = (0, num_sanitizer_1.default)(n2).split(operators_1.DOT);
+    let [num1, dec1] = (0, num_sanitizer_1.default)(n1).split(operators_1.DOT);
+    let [num2, dec2] = (0, num_sanitizer_1.default)(n2).split(operators_1.DOT);
+    [num1, num2] = (0, digit_equalizer_1.default)([num1 || "", num2 || ""]);
+    [dec1, dec2] = (0, digit_equalizer_1.default)([dec1 || "", dec2 || ""], true);
     if (num1.length > num2.length)
         return result.greater;
     if (num1.length < num2.length)

@@ -1,1 +1,1 @@
-{"version":3,"file":"division.d.ts","sourceRoot":"","sources":["../../src/helpers/division.ts"],"names":[],"mappings":"AAOA,MAAM,CAAC,OAAO,UAAU,QAAQ,CAAC,QAAQ,EAAE,MAAM,EAAE,OAAO,EAAE,MAAM,EAAE,aAAa,CAAC,EAAE,MAAM,GAAG,MAAM,CAyBlG"}
+{"version":3,"file":"division.d.ts","sourceRoot":"","sources":["../../src/helpers/division.ts"],"names":[],"mappings":"AAOA,eAAO,MAAM,cAAc,OAAO,CAAC;AAEnC,MAAM,CAAC,OAAO,UAAU,QAAQ,CAAC,QAAQ,EAAE,MAAM,EAAE,OAAO,EAAE,MAAM,GAAG,MAAM,CAyB1E"}

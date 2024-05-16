@@ -3,13 +3,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FRACTION_LIMIT = void 0;
 const operators_1 = require("../utils/operators");
 const compare_number_1 = __importDefault(require("./compare-number"));
 const multiplication_1 = __importDefault(require("./multiplication"));
 const num_sanitizer_1 = __importDefault(require("./num-sanitizer"));
 const subtraction_1 = __importDefault(require("./subtraction"));
 const zero_remover_1 = require("./zero-remover");
-function division(dividend, divisor, fractionLimit) {
+exports.FRACTION_LIMIT = 1000;
+function division(dividend, divisor) {
     const dividendDecIndex = dividend.indexOf(".");
     const divisorDecIndex = divisor.indexOf(".");
     const dividendDecs = dividendDecIndex === -1 ? 0 : dividend.length - dividendDecIndex - 1;
@@ -17,7 +19,7 @@ function division(dividend, divisor, fractionLimit) {
     const totalDecs = dividendDecs - divisorDecs;
     dividend = (0, num_sanitizer_1.default)(dividend.split(".").join(""));
     divisor = divisor.split(".").join("");
-    let quotient = divide(dividend, divisor, fractionLimit);
+    let quotient = divide(dividend, divisor);
     let currDecIndex = quotient.indexOf(".");
     currDecIndex = currDecIndex === -1 ? quotient.length : currDecIndex;
     const targetDecIndex = currDecIndex - totalDecs;
@@ -34,7 +36,8 @@ function division(dividend, divisor, fractionLimit) {
     return (0, num_sanitizer_1.default)(quotient);
 }
 exports.default = division;
-function divide(dividend, divisor, fractionLimit = 1000) {
+function divide(dividend, divisor) {
+    const fractionLimit = exports.FRACTION_LIMIT + 1; // the last decimal digit is used to round the number
     if (divisor === operators_1.ZERO)
         throw new Error("Cannot divide by zero");
     let quotient = "";

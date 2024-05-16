@@ -9,10 +9,17 @@ const input_validator_1 = __importDefault(require("../validators/input-validator
 const stack_1 = require("../helpers/stack");
 const operators_2 = require("./operators");
 const compare_number_1 = __importDefault(require("../helpers/compare-number"));
+const round_1 = __importDefault(require("../helpers/round"));
+/**
+ * Calculates the operation given as input string
+ * @param input operation format: "1 + 2 - 3 * 4 / 5 * (6+7) / (8-9)"
+ * @returns result: "34.2"
+ */
 function calculate(input) {
     input = input.split(" ").join("");
     (0, invalid_err_1.default)(!(0, input_validator_1.default)(input));
-    return calculateRecursively(input);
+    let ans = calculateRecursively(input);
+    return (0, round_1.default)(ans);
 }
 exports.default = calculate;
 function calculateRecursively(input) {
@@ -38,6 +45,7 @@ function calculateRecursively(input) {
     }
     const blocks = separateBlocks(input);
     while (blocks.length > 1) {
+        // console.log(blocks)
         const division = blocks.indexOf(operators_1.DIVISION);
         if (division !== -1) {
             let dividend = blocks[division - 1];
